@@ -6,23 +6,58 @@
   
           主要参数：n_neighbors 设置邻居个数 邻居个数越多，决策边界越平滑，对应更简单的模型。
        
-        回归 from sklearn.neighbors import KNeighborsRegressor
+  用于：回归 from sklearn.neighbors import KNeighborsRegressor
             
           主要参数：n_neighbors
   
   总结：使用较小的邻居个数（比如3个或5个）往往可以得到比较好的结果
-        对数据进行预处理很重要
-        对于有很多特征的数据集往往效果不好
-        预测速度慢
-        实践中往往不会用到
+      对数据进行预处理很重要
+      对于有很多特征的数据集往往效果不好
+      预测速度慢
+      实践中往往不会用到
         
 2.线性模型
 
     用于：分类 
         
         1.Logistic Regression from sklearn.linear_model import LogisticRegression
+       &
+        2.线性支持向量机 from sklearn.svm impoet LinearSVC
         
-          主要参数：C
+          主要参数：
+                C 决定正则化强度的权衡参数，C值越大，正则化越弱。较小的C值可以让算法尽量适应“大多数”数据点，
+                较大的C值更强调每个数据点都分类正确额的重要性。
+                
+                penalty 默认使用L2正则化，可选penalty="l1"。影响正则化，影响模型使用所有特征还是特征子集。
+                
+    用于：回归
+    
+        1.线性回归（普通最小二乘法） from sklearn.linear_model import linearRegression
         
+         主要参数：没有参数，无法控制模型的复杂度
+        
+        2.岭回归 from sklearn.linear_model import Ridge
+        
+         主要参数：alpha 默认参数alpha=1.0。L2正则化，增大alpha会使得系数更加趋向于0，从而而降低训练集性能，很可能会提高泛化性能。
+    
+        3.lasso from sklearn.linear_model import lasso
+        
+         主要参数：alpha 默认参数alpha=1.0。L1正则化，控制系数趋向于0的强度。
+                 
+               max_iter 运行迭代的最大次数。减小alpha的同时，需要增加max_iter。
+               
+        在实践中，一般首选岭回归。如果只有几个特征是重要的，选择lasso可能更好。
+        
+    总结：训练速度非常快，预测速度也很快；
+        可以推广到非常大的数据集，对稀疏数据也很有效；
+        solver="sag"选项在处理大型数据时，比默认值更快；
+        斜率（权重、系数）保存在coef_属性中，偏移（截距）保存在intercept_属性中。
+        
+3.朴素贝叶斯分类器
+   
+    用于：分类
+        GaussianNB应用于任意连续数据
+        BernoulliNB假定输入数据为二分类数据。主要用于文本数据分类。
+        MultinomialNB假定输入数据为计数数据。主要用于文本数据分类。
         
   
